@@ -105,6 +105,7 @@ export class CommentService {
       select: { id: true, status: true },
     });
     if (!exists) throw new NotFoundException('Commentaire introuvable');
+
     try {
       await this.prisma.$transaction([
         this.prisma.commentReport.create({
