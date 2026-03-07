@@ -28,4 +28,3 @@ VPS_USER = student
 docker compose -f docker-compose.prod.yml up 
 docker compose -f docker-compose.prod.yml up -d --build
 docker exec -i $(docker compose -f docker-compose.prod.yml ps -q database) psql -U blablabook_user -d blablabook_db < dumpSql/complete.sql
-docker exec -i $(docker compose ps -q database) psql -U blablabook_user -d blablabook_db < dumpSql/complete.sql
