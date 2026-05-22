@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -52,7 +56,7 @@ export class UsersService {
   }
 
   //! Find user by ID
-  async findById(id: number) {
+  async findById(id: number, requestingUserId?: number) {
     const user = await this.prisma.user.findUnique({
       where: { id },
       select: {
@@ -70,7 +74,13 @@ export class UsersService {
     });
 
     if (!user) {
-      return null;
+      throw new NotFoundException('Utilisateur non trouvé');
+    }
+
+    if (id !== requestingUserId && user?.isPrivate) {
+      throw new ForbiddenException(
+        'Les informations de cet utilisateur sont privées',
+      );
     }
 
     return user;

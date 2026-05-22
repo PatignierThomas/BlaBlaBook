@@ -66,10 +66,10 @@ describe('BooksController', () => {
       expect(mockBooksService.getBooks).toHaveBeenCalledWith(undefined);
     });
 
-    it('converts userId string to number', () => {
+    it('passes userId from authenticated request', () => {
       mockBooksService.getBooks.mockReturnValue([]);
 
-      controller.findAll('5');
+      controller.findAll({ user: { id: 5 } });
 
       expect(mockBooksService.getBooks).toHaveBeenCalledWith(5);
     });
@@ -101,10 +101,10 @@ describe('BooksController', () => {
       );
     });
 
-    it('passes parsed userId', async () => {
+    it('passes userId from authenticated request', async () => {
       mockBooksService.getRandomBooks.mockResolvedValue([]);
 
-      await controller.findRandomBooks('3');
+      await controller.findRandomBooks({ user: { id: 3 } });
 
       expect(mockBooksService.getRandomBooks).toHaveBeenCalledWith(10, 3);
     });
@@ -198,7 +198,7 @@ describe('BooksController', () => {
     it('decodes the query and forwards pagination params', () => {
       mockBooksService.searchBooks.mockReturnValue([]);
 
-      controller.searchBooks('le%20prince', 1, 10, 2);
+      controller.searchBooks('le%20prince', 1, 10, { user: { id: 2 } });
 
       expect(mockBooksService.searchBooks).toHaveBeenCalledWith(
         'le prince',

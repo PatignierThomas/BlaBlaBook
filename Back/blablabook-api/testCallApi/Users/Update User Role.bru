@@ -1,0 +1,21 @@
+meta {
+  name: Update User Role
+  type: http
+  seq: 6
+}
+
+patch {
+  url: http://localhost:3000/users/1/role
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}
+
+body:json {
+  {
+    "roleId": 1
+  }
+}

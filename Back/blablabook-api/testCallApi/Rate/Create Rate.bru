@@ -1,0 +1,22 @@
+meta {
+  name: Create Rate
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/rate
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "bookId": 1,
+    "value": 4
+  }
+}

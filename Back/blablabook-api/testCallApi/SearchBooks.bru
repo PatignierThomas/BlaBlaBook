@@ -5,7 +5,7 @@ meta {
 }
 
 get {
-  url: http://localhost:3000/books/search?q=Bridge&page=1&size=20&userId=2
+  url: http://localhost:3000/books/search?q=Bridge&page=1&size=20
   body: none
   auth: inherit
 }
@@ -14,5 +14,8 @@ params:query {
   q: Bridge
   page: 1
   size: 20
-  userId: 2
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidHlwZSI6ImF1dGgiLCJpYXQiOjE3Nzk0MDYzNTMsImV4cCI6MTc4MDAxMTE1M30.LLB7t_qAjJShg6i55r4xHuocbaCXtvPxnL8MgyxknXQ
 }

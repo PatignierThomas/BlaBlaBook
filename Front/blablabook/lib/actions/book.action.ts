@@ -2,15 +2,12 @@
 
 const url = process.env.NEXT_PUBLIC_API_URL ?? "http://api:3000";
 
-export const getRandomBooks = async (userId?: number | null) => {
-  const fetchUrl = userId
-    ? `${url}/books/fetch-random?userId=${userId}`
-    : `${url}/books/fetch-random`;
-
-  const res = await fetch(fetchUrl, {
+export const getRandomBooks = async (token?: string | null) => {
+  const res = await fetch(`${url}/books/fetch-random`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   });
   if (!res.ok) {
@@ -32,14 +29,12 @@ export const getRandomBooks = async (userId?: number | null) => {
   };
 };
 
-export const getMostPopularBooks = async (userId?: number | null) => {
-  const fetchUrl = userId
-    ? `${url}/books/fetch-popular-books?userId=${userId}`
-    : `${url}/books/fetch-popular-books`;
-  const res = await fetch(fetchUrl, {
+export const getMostPopularBooks = async (token?: string | null) => {
+  const res = await fetch(`${url}/books/fetch-popular-books`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   });
 
@@ -62,14 +57,12 @@ export const getMostPopularBooks = async (userId?: number | null) => {
   };
 };
 
-export const getLatestBooks = async (userId?: number | null) => {
-  const fetchUrl = userId
-    ? `${url}/books/fetch-latest?userId=${userId}`
-    : `${url}/books/fetch-latest`;
-  const res = await fetch(fetchUrl, {
+export const getLatestBooks = async (token?: string | null) => {
+  const res = await fetch(`${url}/books/fetch-latest`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
   });
 

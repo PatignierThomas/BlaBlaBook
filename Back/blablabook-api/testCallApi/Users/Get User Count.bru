@@ -1,0 +1,15 @@
+meta {
+  name: Get User Count
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:3000/users/user-count
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}

@@ -49,14 +49,15 @@ export class CommentService {
   }
 
   async getReportedCommentCount() {
-    const result = await this.prisma.$queryRaw<[{ count: number }]>`
-      SELECT COUNT(DISTINCT c.id)::int as count
+    const result = await this.prisma.$queryRaw<{ id: number }[]>`
+      SELECT c.id
       FROM comment c
       INNER JOIN "commentReport" cr ON c.id = cr."commentId"
+      WHERE c.status = 'ACTIVE'
       GROUP BY c.id
-      HAVING COUNT(cr.id) >= 5 AND c.status = 'ACTIVE'
+      HAVING COUNT(cr.id) >= 5
     `;
-    return { count: result[0]?.count || 0 };
+    return { count: result.length };
   }
 
   async findAll(skip: number, take: number) {

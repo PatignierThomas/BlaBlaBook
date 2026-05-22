@@ -1,0 +1,15 @@
+meta {
+  name: Get Comment Count
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:3000/comments/comment-count
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}

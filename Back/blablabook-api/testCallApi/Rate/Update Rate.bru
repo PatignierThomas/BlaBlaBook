@@ -1,0 +1,21 @@
+meta {
+  name: Update Rate
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:3000/rate/book/1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "value": 3
+  }
+}

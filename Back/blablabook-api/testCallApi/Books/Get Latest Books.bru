@@ -1,0 +1,11 @@
+meta {
+  name: Get Latest Books
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:3000/books/fetch-latest
+  body: none
+  auth: inherit
+}

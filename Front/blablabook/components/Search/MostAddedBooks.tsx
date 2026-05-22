@@ -2,17 +2,12 @@ import BookCard from "../BookCard/BookCard";
 import { mostAddedBooksAction } from "@/lib/actions/search.action";
 import { auth } from "@/auth.config";
 
-const fetchMostAddedBooks = async () => {
-  const result = await mostAddedBooksAction();
-  return result;
-};
-
 async function MostAddedBooks() {
   const session = await auth();
   const token = session?.accessToken ?? null;
   const userId = session?.user ? Number(session.user.id) : undefined;
 
-  const mostAddedBooks = await fetchMostAddedBooks();
+  const mostAddedBooks = await mostAddedBooksAction(9, token);
 
   return (
     <div className="mb-12">

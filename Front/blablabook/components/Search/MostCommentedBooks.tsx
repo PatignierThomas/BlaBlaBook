@@ -2,16 +2,11 @@ import { auth } from "@/auth.config";
 import BookCard from "../BookCard/BookCard";
 import { mostCommentedBooksAction } from "@/lib/actions/search.action";
 
-const fetchMostCommentedBooks = async () => {
-  const result = await mostCommentedBooksAction();
-  return result;
-};
-
 async function MostCommentedBooks() {
   const session = await auth();
   const token = session?.accessToken ?? null;
   const userId = session?.user ? Number(session.user.id) : undefined;
-  const mostCommentedBooks = await fetchMostCommentedBooks();
+  const mostCommentedBooks = await mostCommentedBooksAction(9, token);
 
   return (
     <div className="mb-12">

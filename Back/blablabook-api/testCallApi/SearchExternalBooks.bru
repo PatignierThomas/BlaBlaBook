@@ -1,0 +1,20 @@
+meta {
+  name: SearchExternalBooks
+  type: http
+  seq: 7
+}
+
+get {
+  url: http://localhost:3000/books/search-external?q=Bridge&limit=10
+  body: none
+  auth: inherit
+}
+
+params:query {
+  q: Bridge
+  limit: 10
+}
+
+headers {
+  ~Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidHlwZSI6ImF1dGgiLCJpYXQiOjE3Nzk0MDYzNTMsImV4cCI6MTc4MDAxMTE1M30.LLB7t_qAjJShg6i55r4xHuocbaCXtvPxnL8MgyxknXQ
+}

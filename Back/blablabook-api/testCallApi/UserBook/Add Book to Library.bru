@@ -1,0 +1,15 @@
+meta {
+  name: Add Book to Library
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:3000/userbook/add/1/1
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}

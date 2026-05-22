@@ -1,0 +1,15 @@
+meta {
+  name: Remove Book from Library
+  type: http
+  seq: 5
+}
+
+delete {
+  url: http://localhost:3000/userbook/remove/1
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}

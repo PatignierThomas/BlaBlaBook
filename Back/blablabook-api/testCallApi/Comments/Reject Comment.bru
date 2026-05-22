@@ -1,0 +1,15 @@
+meta {
+  name: Reject Comment
+  type: http
+  seq: 8
+}
+
+patch {
+  url: http://localhost:3000/comments/1/reject
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}

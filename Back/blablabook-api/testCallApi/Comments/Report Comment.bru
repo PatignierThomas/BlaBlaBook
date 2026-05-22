@@ -1,0 +1,15 @@
+meta {
+  name: Report Comment
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:3000/comments/1/report
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}

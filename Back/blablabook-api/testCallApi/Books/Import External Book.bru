@@ -1,0 +1,23 @@
+meta {
+  name: Import External Book
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:3000/books/import-external
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "key": "/books/OL7353617M",
+    "title": "The Great Gatsby",
+    "author_name": ["F. Scott Fitzgerald"],
+    "first_publish_year": 1925,
+    "isbn": ["9780743273565"],
+    "cover_i": 8432819,
+    "subject": ["Fiction", "Classic literature"]
+  }
+}

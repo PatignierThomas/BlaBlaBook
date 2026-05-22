@@ -1,0 +1,22 @@
+meta {
+  name: Create Comment
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/comments
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "bookId": 1,
+    "content": "Super livre !"
+  }
+}

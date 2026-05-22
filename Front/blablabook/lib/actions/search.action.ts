@@ -78,16 +78,17 @@ const url = process.env.NEXT_PUBLIC_API_URL ?? "http://api:3000";
 
 export const searchBooksAction = async (
   query: string,
-  userId?: number,
+  token?: string | null,
   page: number = 1,
   size: number = 10,
 ) => {
   const res = await fetch(
-    `${url}/books/search?q=${encodeURIComponent(query)}&page=${page}&size=${size}${userId ? `&userId=${userId}` : ""}`,
+    `${url}/books/search?q=${encodeURIComponent(query)}&page=${page}&size=${size}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
     },
   );
@@ -172,13 +173,14 @@ export const importBooksFromExternalApiAction = async (
   };
 };
 
-export const mostCommentedBooksAction = async (take = 9, userId?: number) => {
+export const mostCommentedBooksAction = async (take = 9, token?: string | null) => {
   const res = await fetch(
-    `${url}/books/most-commented-books?take=${take}${userId ? `&userId=${userId}` : ""}`,
+    `${url}/books/most-commented-books?take=${take}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
     },
   );
@@ -200,13 +202,14 @@ export const mostCommentedBooksAction = async (take = 9, userId?: number) => {
   };
 };
 
-export const mostAddedBooksAction = async (take = 9, userId?: number) => {
+export const mostAddedBooksAction = async (take = 9, token?: string | null) => {
   const res = await fetch(
-    `${url}/books/most-added-books?take=${take}${userId ? `&userId=${userId}` : ""}`,
+    `${url}/books/most-added-books?take=${take}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
     },
   );

@@ -22,9 +22,9 @@ export default async function BookLists() {
   const userId = session?.user ? Number(session.user.id) : undefined;
 
   const [resRandom, resPopular, resLatest] = await Promise.all([
-    getRandomBooks(userId),
-    getMostPopularBooks(userId),
-    getLatestBooks(userId),
+    getRandomBooks(token),
+    getMostPopularBooks(token),
+    getLatestBooks(token),
   ]);
 
   const randomBooks: Book[] = resRandom.success ? resRandom.data : [];

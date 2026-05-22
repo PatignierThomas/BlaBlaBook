@@ -23,8 +23,7 @@ export default async function Search({ searchParams }: SearchPageProps) {
   let backUpSearch = null;
 
   if (query) {
-    const userId = session?.user ? Number(session.user.id) : undefined;
-    searchResults = await searchBooksAction(query, userId, 1, 10);
+    searchResults = await searchBooksAction(query, token, 1, 10);
     if (
       query.trim().length >= 3 &&
       (!searchResults.success ||

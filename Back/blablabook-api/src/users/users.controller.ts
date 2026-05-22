@@ -14,6 +14,7 @@ import {
   Req,
   Query,
   HttpCode,
+  NotFoundException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -75,7 +76,7 @@ export class UsersController {
 
     if ('error' in result) {
       if (result.error === 'NOT_FOUND') {
-        throw new BadRequestException('Utilisateur non trouvé');
+        throw new NotFoundException('Utilisateur non trouvé');
       } else if (result.error === 'PRIVATE') {
         throw new ForbiddenException('Ce profil est privé');
       }
@@ -90,15 +91,8 @@ export class UsersController {
     @Param('id', ParseIntPipe) id: number,
     @Req() request: express.Request,
   ) {
-    const user = await this.usersService.findById(id);
-    if (id !== request.user?.id && user?.isPrivate) {
-      throw new ForbiddenException(
-        'Les informations de cet utilisateur sont privées',
-      );
-    }
-    if (user) {
-      return user;
-    }
+    const user = await this.usersService.findById(id, request.user?.id);
+    return user;
   }
 
   //! UPDATE USER BY ID
@@ -121,7 +115,6 @@ export class UsersController {
           cb(null, `${randomName}${extname(file.originalname)}`);
         },
       }),
-
       fileFilter: (
         _req: Express.Request,
         file: Express.Multer.File,

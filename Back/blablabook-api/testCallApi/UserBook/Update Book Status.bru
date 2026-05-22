@@ -1,0 +1,21 @@
+meta {
+  name: Update Book Status
+  type: http
+  seq: 4
+}
+
+patch {
+  url: http://localhost:3000/userbook/status/1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+
+body:json {
+  {
+    "status": "READ"
+  }
+}

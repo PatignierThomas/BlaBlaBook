@@ -1,0 +1,15 @@
+meta {
+  name: Approve Comment
+  type: http
+  seq: 7
+}
+
+patch {
+  url: http://localhost:3000/comments/1/approve
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer {{admin_token}}
+}

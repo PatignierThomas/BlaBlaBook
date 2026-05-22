@@ -8,10 +8,11 @@ import {
   Param,
   ParseIntPipe,
   UseGuards,
+  Request,
 } from '@nestjs/common';
 import { BooksService } from './books.service';
 import type { OpenLibraryDoc } from './types/books.type';
-import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { OptionalAuthGuard } from 'src/auth/guards/optional-auth.guard';
 
 @Controller('books')
@@ -31,38 +32,44 @@ export class BooksController {
   // }
 
   @Get('fetch-random')
-  async findRandomBooks(@Query('userId') userId?: string) {
-    return this.booksService.getRandomBooks(10, userId ? +userId : undefined);
+  @ApiBearerAuth()
+  @UseGuards(OptionalAuthGuard)
+  async findRandomBooks(@Request() req?: { user?: { id: number } }) {
+    return this.booksService.getRandomBooks(10, req?.user?.id);
   }
 
   @Get('fetch-popular-books')
-  async findMostPopularBooks(@Query('userId') userId?: string) {
-    return this.booksService.getMostPopularBooks(
-      10,
-      userId ? +userId : undefined,
-    );
+  @ApiBearerAuth()
+  @UseGuards(OptionalAuthGuard)
+  async findMostPopularBooks(@Request() req?: { user?: { id: number } }) {
+    return this.booksService.getMostPopularBooks(10, req?.user?.id);
   }
 
   @Get('fetch-latest')
-  async findLatestBooks(@Query('userId') userId?: string) {
-    return this.booksService.getLatestBooks(10, userId ? +userId : undefined);
+  @ApiBearerAuth()
+  @UseGuards(OptionalAuthGuard)
+  async findLatestBooks(@Request() req?: { user?: { id: number } }) {
+    return this.booksService.getLatestBooks(10, req?.user?.id);
   }
 
   @Get()
-  @ApiQuery({ name: 'userId', required: false, type: Number })
-  findAll(@Query('userId') userId?: string) {
-    return this.booksService.getBooks(userId ? +userId : undefined);
+  @ApiBearerAuth()
+  @UseGuards(OptionalAuthGuard)
+  findAll(@Request() req?: { user?: { id: number } }) {
+    return this.booksService.getBooks(req?.user?.id);
   }
 
   @Get('most-added-books')
+  @ApiBearerAuth()
+  @UseGuards(OptionalAuthGuard)
   mostAddedBooks(
     @Query('take') take?: string,
-    @Query('userId') userId?: number,
+    @Request() req?: { user?: { id: number } },
   ) {
     const n = take ? Number(take) : 10;
     return this.booksService.mostAddedBooks(
       Number.isFinite(n) ? Math.min(n, 10) : 10,
-      userId,
+      req?.user?.id,
     );
   }
 
@@ -71,22 +78,25 @@ export class BooksController {
   @UseGuards(OptionalAuthGuard)
   mostCommentedBooks(
     @Query('take') take?: string,
-    @Query('userId') userId?: number,
+    @Request() req?: { user?: { id: number } },
   ) {
     const n = take ? Number(take) : 10;
     return this.booksService.mostCommentedBooks(
       Number.isFinite(n) ? Math.min(n, 10) : 10,
-      userId,
+      req?.user?.id,
     );
   }
 
   @Get('search')
+  @ApiBearerAuth()
+  @UseGuards(OptionalAuthGuard)
   searchBooks(
     @Query('q') query: string,
     @Query('page', new ParseIntPipe({ optional: true })) pageNumber?: number,
     @Query('size', new ParseIntPipe({ optional: true })) pageSize?: number,
-    @Query('userId', new ParseIntPipe({ optional: true })) userId?: number,
+    @Request() req?: { user?: { id: number } },
   ) {
+    const userId = req?.user?.id;
     return this.booksService.searchBooks(
       decodeURIComponent(query),
       pageNumber,
